@@ -39,7 +39,6 @@ static inline unsigned int count_graph_paths(am_matrix_i *sm_m) {
   return res;
 }
 
-
 void show_paths_cycles(am_matrix_i *graph, size_t inter_v) {
   size_t inter_v_cc = 0;
   size_t dism = am_matrix_i_row_c(graph);
@@ -57,8 +56,7 @@ void show_paths_cycles(am_matrix_i *graph, size_t inter_v) {
   am_matrix_i_free(power);
 }
 
-
-am_matrix_i *dist_matrix_gen(am_matrix_i *graph) {
+am_matrix_i *shlyah_matrix_gen(am_matrix_i *graph) {
   am_matrix_i *curr_len_np = am_matrix_i_copy(graph);
   am_matrix_i *sum_m = am_matrix_i_copy(graph);
   for (size_t i = 0; i < am_matrix_i_row_c(graph) - 2; i++) {
@@ -70,12 +68,12 @@ am_matrix_i *dist_matrix_gen(am_matrix_i *graph) {
   return sum_m;
 }
 
-am_matrix_i* dosyaj_matrix_gen(am_matrix_i* graph) {
-  am_matrix_i* ret = dist_matrix_gen(graph);
+am_matrix_i *dosyaj_matrix_gen(am_matrix_i *graph) {
+  am_matrix_i *ret = shlyah_matrix_gen(graph);
   am_matrix_i_map(ret, dosyaj_graph_boolean_map_f, ret);
-  //Put 1 on diagonal
-  for(size_t i = 0; i < am_matrix_i_row_c(graph); i++)
-	*am_matrix_i_at(ret,i,i) = 1;
+  // Put 1 on diagonal
+  for (size_t i = 0; i < am_matrix_i_row_c(graph); i++)
+    *am_matrix_i_at(ret, i, i) = 1;
   return ret;
 }
 
@@ -116,7 +114,7 @@ int main(void) {
   am_matrix_i *graph = read_graph();
 
   puts("\nNow paths and cycles:");
-  show_paths_cycles(graph,0);
+  show_paths_cycles(graph, 0);
 
   puts("\nDosyaj:");
   am_matrix_i *dosyaj = dosyaj_matrix_gen(graph);
