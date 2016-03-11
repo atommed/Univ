@@ -104,6 +104,9 @@ am_matrix_i *read_graph(void) {
 
 int main(void) {
   am_matrix_i *graph = read_graph();
+  puts("tt");
+  am_matrix_i_transpose(graph, graph);
+  print_am(graph);
 
   puts("\nNow paths and cycles:");
   show_paths_cycles(graph);

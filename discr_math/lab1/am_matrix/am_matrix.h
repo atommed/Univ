@@ -20,3 +20,6 @@ am_matrix_i *am_matrix_i_sum(const am_matrix_i *l, const am_matrix_i *r,
                              am_matrix_i *res);
 am_matrix_i *am_matrix_i_map(const am_matrix_i *m, int (*f)(int x),
                              am_matrix_i *res);
+
+am_matrix_i* am_matrix_i_transpose(am_matrix_i* m,
+				   am_matrix_i* res);

@@ -143,3 +143,23 @@ am_matrix_i *am_matrix_i_map(const am_matrix_i *m, int (*f)(int x),
 
   return res;
 }
+
+am_matrix_i* am_matrix_i_transpose(am_matrix_i* m,
+				   am_matrix_i* res){
+  am_matrix_i* m_copy = NULL;
+  if(res == NULL)
+    res = am_matrix_i_new(m->cols, m->rows);
+  if(res == m){
+    m_copy = am_matrix_i_copy(m);
+    m = m_copy;
+  }
+
+  for(size_t row = 0; row < m->rows;row++)
+    for(size_t col = 0; col < m->cols; col++)
+      *am_matrix_i_at(res,col,row) =
+	*am_matrix_i_at(m,row, col);
+  
+  if(m_copy) am_matrix_i_free(m_copy);
+  
+  return res;
+}
