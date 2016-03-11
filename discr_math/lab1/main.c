@@ -39,20 +39,24 @@ static inline unsigned int count_graph_paths(am_matrix_i *sm_m) {
   return res;
 }
 
-void show_paths_cycles(am_matrix_i *graph) {
+
+void show_paths_cycles(am_matrix_i *graph, size_t inter_v) {
+  size_t inter_v_cc = 0;
   size_t dism = am_matrix_i_row_c(graph);
   am_matrix_i *power = am_matrix_i_copy(graph);
 
   for (size_t i = 1; i < dism; i++) {
     printf("There are %d path(s) and %d cycle(s) of length %zu\n",
            count_graph_paths(power), count_graph_cycles(power), i);
+    inter_v_cc += *am_matrix_i_at(power, inter_v, inter_v);
     puts("See:");
     print_am(power);
     am_matrix_i_mul(power, graph, power);
   }
-
+  printf("\nVertex %zu has %zu cycles\n", inter_v, inter_v_cc);
   am_matrix_i_free(power);
 }
+
 
 am_matrix_i *dist_matrix_gen(am_matrix_i *graph) {
   am_matrix_i *curr_len_np = am_matrix_i_copy(graph);
@@ -61,12 +65,18 @@ am_matrix_i *dist_matrix_gen(am_matrix_i *graph) {
     am_matrix_i_mul(curr_len_np, graph, curr_len_np);
     am_matrix_i_sum(curr_len_np, sum_m, sum_m);
   }
-  am_matrix_i_map(sum_m, dosyaj_graph_boolean_map_f, sum_m);
-  // Put 1 on diagonal
-  for (size_t i = 0; i < am_matrix_i_row_c(graph); i++)
-    *am_matrix_i_at(sum_m, i, i) = 1;
+
   am_matrix_i_free(curr_len_np);
   return sum_m;
+}
+
+am_matrix_i* dosyaj_matrix_gen(am_matrix_i* graph) {
+  am_matrix_i* ret = dist_matrix_gen(graph);
+  am_matrix_i_map(ret, dosyaj_graph_boolean_map_f, ret);
+  //Put 1 on diagonal
+  for(size_t i = 0; i < am_matrix_i_row_c(graph); i++)
+	*am_matrix_i_at(ret,i,i) = 1;
+  return ret;
 }
 
 am_matrix_i *read_graph(void) {
@@ -104,18 +114,15 @@ am_matrix_i *read_graph(void) {
 
 int main(void) {
   am_matrix_i *graph = read_graph();
-  puts("tt");
-  am_matrix_i_transpose(graph, graph);
-  print_am(graph);
 
   puts("\nNow paths and cycles:");
-  show_paths_cycles(graph);
+  show_paths_cycles(graph,0);
 
   puts("\nDosyaj:");
-  am_matrix_i *dist = dist_matrix_gen(graph);
-  print_am(dist);
+  am_matrix_i *dosyaj = dosyaj_matrix_gen(graph);
+  print_am(dosyaj);
 
-  am_matrix_i_free(dist);
+  am_matrix_i_free(dosyaj);
   am_matrix_i_free(graph);
   return EXIT_SUCCESS;
 }
