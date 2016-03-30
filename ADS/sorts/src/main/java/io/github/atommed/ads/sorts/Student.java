@@ -5,6 +5,15 @@ package io.github.atommed.ads.sorts;
  */
 public class Student implements Comparable<Student> {
     private String name;
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     private String surname;
 
     long card_id;
@@ -15,6 +24,12 @@ public class Student implements Comparable<Student> {
         this.surname = surname;
         this.card_id = card_id;
         this.group_id = group_id;
+    }
+
+    @Override
+    public String toString(){
+        //return String.format("{#%2d %0$s %1$s, group %$3}", name, surname, card_id, group_id);
+        return String.format("{#%3$d %1$s %2$s, group %4$d}", name, surname, card_id, group_id);
     }
 
     @Override
