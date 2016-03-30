@@ -10,6 +10,13 @@ public class Student implements Comparable<Student> {
     long card_id;
     long group_id;
 
+    public Student(String name, String surname, long card_id, long group_id) {
+        this.name = name;
+        this.surname = surname;
+        this.card_id = card_id;
+        this.group_id = group_id;
+    }
+
     @Override
     public int compareTo(Student other) {
         if(this.group_id < other.group_id) return -1;

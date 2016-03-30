@@ -7,12 +7,16 @@ import java.util.Comparator;
  */
 public class BubbleSort {
     public static <T> void sort(T[] arr, Comparator<T> c){
+        boolean swapped = true;
         for(int i = 0; i < arr.length; i++){
-            for(int j = i; j < arr.length - 1; j++){
-                if(c.compare(arr[j],arr[j+1]) < 0){
+            if(!swapped) break;
+            swapped = false;
+            for(int j = 0; j < arr.length - 1 - i; j++){
+                if(c.compare(arr[j],arr[j+1]) > 0){
                     T t = arr[j];
-                    arr[j] = arr[i];
-                    arr[i] = t;
+                    arr[j] = arr[j+1];
+                    arr[j+1] = t;
+                    swapped = true;
                 }
             }
         }
