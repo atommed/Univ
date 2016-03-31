@@ -28,7 +28,6 @@ public class Student implements Comparable<Student> {
 
     @Override
     public String toString(){
-        //return String.format("{#%2d %0$s %1$s, group %$3}", name, surname, card_id, group_id);
         return String.format("{#%3$d %1$s %2$s, group %4$d}", name, surname, card_id, group_id);
     }
 

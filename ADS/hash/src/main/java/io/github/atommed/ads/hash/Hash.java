@@ -31,7 +31,7 @@ public class Hash<K, V> {
 	if(!data[i].used || data[i].key.equals(k))
 	  return i;
 
-      throw new IllegalStateException("Data holder is too small");
+      throw new Error("Data holder is too small");
   }
 
   public Hash(){
@@ -46,7 +46,9 @@ public class Hash<K, V> {
     data[pos].used = true;
   }
   public V get(K key){
-    int pos
+    int pos = getIndex(key);
+    if(data[pos].used) return data[pos];
+    else return null;
   }
   public boolean remove(K key){
    return false;
