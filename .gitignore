@@ -1,0 +1,4 @@
+*.out
+#IDE
+#EMACS
+*.*~
