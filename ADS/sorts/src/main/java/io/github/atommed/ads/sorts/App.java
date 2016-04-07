@@ -38,6 +38,14 @@ public class App{
             System.out.println(s);
     }
 
+
+    public static void printSquareArr(Student[][] arr){
+      for(int i = 0; i < arr.length; i++){
+	System.out.println("Row " + (i+1));
+	printArray(arr[i]);
+      }
+    }
+
     public static Student[] copyArray(Student... arr){
         Student[] s = new Student[arr.length];
         System.arraycopy(arr, 0, s, 0, arr.length);
@@ -63,22 +71,38 @@ public class App{
                 "###################################");
         printArray(bubble_res);
 
-        Integer[][] deb = {
-                {3,2,1},
-                {1,2,3}
-        };
-        Integer[] t = deb[0];
-        deb[0] = deb[1];
-        deb[1] = t;
-        System.out.println(deb[0][0]);
-        /*
-        BubbleSort.sort(deb, new Comparator<Integer[]>() {
+	System.out.println("INSERTION SORT\n" + 
+	       "####################################");
+
+	Student[][] insSort = new Student[5][5];
+	for(int i = 0; i < 5; i++){
+	  for(int j = 0; j < 5; j++)
+	    insSort[i][j] = students[i*5+j];
+	}
+	System.out.println("Unsorted");
+	printSquareArr(insSort);
+
+	Student[] tmpInsSort = new Student[25];
+	System.arraycopy(students,0,tmpInsSort, 0, students.length);
+        
+	InsertionSort.sort(tmpInsSort, new Comparator<Student>() {
             @Override
-            public int compare(Integer[] o1, Integer[] o2) {
-                return o1[0] - o2[0];
+            public int compare(Student o1, Student o2) {
+                if(o1.group_id < o2.group_id) return -1;
+                else if(o1.group_id > o2.group_id) return 1;
+                else return o1.getName().compareTo(o2.getName());
             }
         });
-        System.out.println(deb[0][0]);
-        */
+
+	for(int i =0; i < 5; i++){
+	  int j = 0;
+	  while(tmpInsSort[i*5+j].group_id == i+1){
+	    insSort[i][j] = tmpInsSort[i*5+j];
+	    j++;
+	    if(j==5) break;
+	  }
+	}
+	System.out.println("Sorted");
+	printSquareArr(insSort);
     }
 }
