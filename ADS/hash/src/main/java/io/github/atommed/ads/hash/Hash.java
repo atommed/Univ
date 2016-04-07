@@ -21,7 +21,7 @@ public class Hash<K, V> {
     data = new Pair[capacity];
   }
 
-  private static int getIndex(Key k){
+  private int getIndex(Key k){
       int hash = k.hashCode() & (data.length - 1);
       for(int i = hash; i < data.length; i++){
 	if(!data[i].used || data[i].key.equals(k))
