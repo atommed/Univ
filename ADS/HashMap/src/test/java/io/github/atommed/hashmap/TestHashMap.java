@@ -78,7 +78,7 @@ public class TestHashMap {
     }
 
     @Test
-    public void collisionsHandled(){
+    public void putCollisionsHandled(){
         HashMap<CollisionFull, String> dict = new HashMap<>();
         int N = 500;
         for(int i = 0; i < N; i++)
@@ -91,8 +91,10 @@ public class TestHashMap {
     public void removeWorks(){
         m = getEmptyMap();
         m.put("A", "B");
+        m.put("C", "B");
         assertEquals(m.remove("A"), "B");
         assertEquals(m.get("A"), null);
-        assertEquals(m.size(), 0);
+        assertEquals(m.get("C"),"B");//Assert not removes more
+        assertEquals(m.size(), 1);
     }
 }
