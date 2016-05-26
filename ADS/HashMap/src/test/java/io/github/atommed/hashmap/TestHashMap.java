@@ -86,6 +86,25 @@ public class TestHashMap {
         for(int i = N - 1; i >= 0; i--)
             assertEquals(dict.get(new CollisionFull(i)), Integer.toString(i*i)+"VAL");
     }
+    @Test
+    public void removeCollisionsHandled(){
+        HashMap<CollisionFull, String> dict = new HashMap<>();
+	dict.put(new CollisionFull(1), "First");
+	dict.put(new CollisionFull(15), "Second");
+	dict.put(new CollisionFull(90), "Third");
+	assertEquals("Second",dict.remove(new CollisionFull(15)));
+	assertEquals("Third",dict.remove(new CollisionFull(90)));
+	assertEquals(dict.size(), 1);
+    }
+    @Test
+    public void getCollisionsHandled(){
+        HashMap<CollisionFull, String> dict = new HashMap<>();
+	dict.put(new CollisionFull(1), "First");
+	dict.put(new CollisionFull(15), "Second");
+	dict.remove(new CollisionFull(1));
+	assertEquals("Second", dict.get(new CollisionFull(15)));
+	assertEquals(dict.size(), 1);
+    }
 
     @Test
     public void removeWorks(){

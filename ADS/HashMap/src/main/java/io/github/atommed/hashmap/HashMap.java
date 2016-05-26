@@ -3,6 +3,8 @@ package io.github.atommed.hashmap;
 /**
  * Created by gregory on 25.05.16.
  */
+
+//TODO: Add deleted flag
 public class HashMap<K,V> {
     private static final float defaultCriticalLoadFactor = 0.75f;
     private static final int defaultInitialCapacity = (1<<4);
