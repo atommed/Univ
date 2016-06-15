@@ -51,5 +51,14 @@ public class Program {
         tree.insert(42,"lol");
         pp("Traversing after deleted all < 15");
         tree.traverse();
+
+        tree.removeAll(new BSTree.RemoveCriteria<Integer, String>() {
+            @Override
+            public boolean toRemove(Integer key, String value) {
+                return  key.intValue() % 2 == 0;
+            }
+        });
+        pp("Traversing after deleted all % 2");
+        tree.traverse();
     }
 }
