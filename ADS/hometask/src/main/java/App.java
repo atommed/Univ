@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class App {
@@ -7,16 +6,16 @@ public class App {
 
         TestDataProvider dp = new TestDataProvider();
 
-        /*
-        int[] o_arr = dp.genIntsRandom(5000000);
+
+        int[] o_arr = dp.genIntsRandom(1_000_000);
         long ta;
         int[] std = null;
         int[] my = null;
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 10; i++) {
             std = Arrays.copyOf(o_arr,o_arr.length);
             Arrays.sort(std);
             my = Arrays.copyOf(o_arr,o_arr.length);
-            Sorts.lsd_radix_sort(my);
+            Sorts.buMergeSort(my);
         }
 
         std = Arrays.copyOf(o_arr,o_arr.length);
@@ -26,11 +25,11 @@ public class App {
 
         my = Arrays.copyOf(o_arr,o_arr.length);
         ta = System.nanoTime();
-        Sorts.lsd_radix_sort(my);
+        Sorts.buMergeSort(my);
         System.out.println(System.nanoTime() - ta);
 
         assert Arrays.equals(std,my);
-        */
+
 
 
         /*

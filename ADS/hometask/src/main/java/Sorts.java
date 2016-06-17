@@ -2,8 +2,54 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.stream.IntStream;
 
+import static java.lang.Integer.min;
+
 
 public class Sorts {
+
+    private static void buMerge(int[] A,int iLeft,int iRight,int iEnd,int[] B)
+    {
+        int i = iLeft, j = iRight;
+        // While there are elements in the left or right runs...
+        for (int k = iLeft; k < iEnd; k++) {
+            // If left run head exists and is <= existing right run head.
+            if (i < iRight && (j >= iEnd || A[i] <= A[j])) {
+                B[k] = A[i];
+                i = i + 1;
+            } else {
+                B[k] = A[j];
+                j = j + 1;
+            }
+        }
+    }
+
+    public static void buMergeSort(int[] orig_arr)
+    {
+        int n = orig_arr.length;
+        int[] A = orig_arr;
+        int[] B = new int[n];
+
+        // Each 1-element run in A is already "sorted".
+        // Make successively longer sorted runs of length 2, 4, 8, 16... until whole array is sorted.
+        for (int width = 1; width < n; width = 2 * width)
+        {
+            // Array A is full of runs of length width.
+            for (int i = 0; i < n; i = i + 2 * width)
+            {
+                // Merge two runs: A[i:i+width-1] and A[i+width:i+2*width-1] to B[]
+                // or copy A[i:n-1] to B[] ( if(i+width >= n) )
+                buMerge(A, i, min(i+width, n), min(i+2*width, n), B);
+            }
+            // Now work array B is full of runs of length 2*width.
+            // Swap the roles of A and B.
+            //System.arraycopy(B,0,A,0,n);
+            int[] tmp = A;
+            A = B;
+            B = tmp;
+            // Now array A is full of runs of length 2*width.
+        }
+    }
+
     public static <T extends Comparable<T>> void knuthShellSort(T[] arr){
         int gap = 1;
         while (gap <= arr.length / 3)
