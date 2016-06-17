@@ -34,12 +34,13 @@ public class Sorts {
     }
 
     private static int radixCompareStrings(String s1, String s2, int pos){
+        if(s1.length() <= pos && s2.length() <= pos) return 0;
         if(s1.length() <= pos) return -1;
         else if(s2.length() <= pos) return 1;
         else return Character.compare(s1.charAt(pos),s2.charAt(pos));
     }
 
-    static int[] c = new int[127+1];
+    static int[] c = new int[Character.MAX_VALUE - Character.MIN_VALUE + 1];
 
     private static String[] radixCountingSort(String[] a, int pos){
         String[] b = new String[a.length];
@@ -65,11 +66,13 @@ public class Sorts {
 
     private static void radixInsertionSort(String[] arr, int pos){
         for(int i = 1; i < arr.length; i++){
-            String tmp = arr[i];
-            int j = i;
-            for(; j>= 1 && radixCompareStrings(arr[i],arr[j - 1],pos) < 0; j--)
-                arr[j] = arr[j-1];
-            arr[j] = tmp;
+            String v = arr[i];
+            int j = i - 1;
+            while (j>=0 && radixCompareStrings(arr[j],v,pos) > 0) {
+                arr[j + 1] = arr[j];
+                j--;
+            }
+            arr[j+1] = v;
         }
     }
 
@@ -77,7 +80,7 @@ public class Sorts {
         String[] arr = old_arr;
         int maxLength = Arrays.stream(arr).map(String::length).max(Integer::compare).get();
         for(int pos =  maxLength - 1; pos >= 0; pos--) {
-            //radixInsertionSort(arr, pos);
+            //radixInsertionSort(old_arr, pos);
             arr = radixCountingSort(arr, pos);
         }
         System.arraycopy(arr,0,old_arr,0,arr.length);

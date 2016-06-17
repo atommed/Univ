@@ -1,47 +1,62 @@
-import java.lang.reflect.Array;
-import java.util.Arrays;
-
 /**
  * Created by gregory on 15.06.16.
  */
 public class App {
-    static final Integer[] orig_arr = {1,5,4,78,23,64,5,65,5,5,22,67,2,33,44,55,66,34,3,23,15,87,3,44,20};
-    static Integer[] sorted_arr;
-    static {
-        sorted_arr = Arrays.copyOf(orig_arr,orig_arr.length);
-        Arrays.sort(sorted_arr);
-    }
 
-    public static Integer[] toSort(){
-        return Arrays.copyOf(orig_arr,orig_arr.length);
-    }
+    public static void main(String... args) throws InterruptedException {
+        /*
+        TestDataProvider dp = new TestDataProvider();
+        String[] sa,sb,oo;
+        long ta;
 
-    public static void assertSorted(Integer[] arr){
-        assert Arrays.equals(arr, sorted_arr);
-    }
+        String[] orig_strs = dp.genStringRandom(10_000_000, 2);
 
-    public static void main(String... args){
-        Integer[] tmp_arr;
+        for(int i = 0; i <  20; i++){
+            sa = Arrays.copyOf(orig_strs, orig_strs.length);
+            Sorts.lsd_radix_sort(sa);
+            oo = Arrays.copyOf(orig_strs,orig_strs.length);
+            Arrays.sort(oo);
+        }
 
-        tmp_arr = toSort();
-        Sorts.knuthShellSort(tmp_arr);
-        assertSorted(tmp_arr);
+        sa = Arrays.copyOf(orig_strs,orig_strs.length);
+        oo = Arrays.copyOf(orig_strs,orig_strs.length);
 
-        tmp_arr = toSort();
-        Sorts.insertionSort(tmp_arr);
-        assertSorted(tmp_arr);
+        ta = System.nanoTime();
+        Arrays.sort(oo);
+        System.out.println(System.nanoTime() - ta);
 
-        String[] orig_strs = {
-                "Vasya",
-                "Vanya",
-                "Vova",
-                "Ars",
-                "Zubochek"
-        };
-        String[] sortedStrings = Arrays.copyOf(orig_strs,orig_strs.length);
-        Arrays.sort(sortedStrings);
-        String[] mySortStrings = Arrays.copyOf(orig_strs,orig_strs.length);
-        Sorts.lsd_radix_sort(mySortStrings);
-        assert Arrays.equals(mySortStrings, sortedStrings);
+        ta = System.nanoTime();
+        Sorts.lsd_radix_sort(sa);
+        System.out.println(System.nanoTime() - ta);
+        assert Arrays.equals(oo,sa);
+
+        ta = System.nanoTime();
+        Sorts.insertionSort(sb);
+        System.out.println(System.nanoTime() - ta);
+        assert Arrays.equals(oo,sb);
+        */
+
+        /*
+        TestDataProvider dm = new TestDataProvider();
+        int[] arr = dm.genIntsReverseSorted(40);
+        System.out.println(Arrays.toString(arr));
+        */
+        HashTableLinear<String> s = new HashTableLinear<>();
+        //HashTableQuad<String> s = new HashTableQuad<>();
+        for(int i  = 0; i  <100; i++){
+            s.put(i,Integer.toString(i));
+        }
+        for(int i = 0; i < 100; i++){
+            if(i % 3 == 0)
+                assert s.remove(i).equals(Integer.toString(i));
+        }
+        for(int i =0;i < 100; i++){
+            if(i % 3 == 0)
+                assert s.get(i) == null;
+            else
+                assert s.get(i).equals(Integer.toString(i));
+        }
+
+        //System.out.println(s.get(42));
     }
 }
