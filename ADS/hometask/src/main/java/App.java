@@ -1,6 +1,3 @@
-/**
- * Created by gregory on 15.06.16.
- */
 public class App {
 
     public static void main(String... args) throws InterruptedException {
@@ -56,6 +53,12 @@ public class App {
             else
                 assert s.get(i).equals(Integer.toString(i));
         }
+
+        assert s.get(0) == null;
+        assert s.put(0,"Soska") == null;
+        assert s.get(0).equals("Soska");
+        assert s.remove(0).equals("Soska");
+        assert s.get(0) == null;
 
         //System.out.println(s.get(42));
     }

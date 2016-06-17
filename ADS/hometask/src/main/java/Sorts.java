@@ -1,9 +1,7 @@
 import java.util.Arrays;
 import java.util.Comparator;
 
-/**
- * Created by gregory on 15.06.16.
- */
+
 public class Sorts {
     public static <T extends Comparable<T>> void knuthShellSort(T[] arr){
         int gap = 1;

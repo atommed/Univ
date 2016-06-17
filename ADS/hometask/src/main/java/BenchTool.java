@@ -1,9 +1,6 @@
 import java.io.FileWriter;
 import java.io.IOException;
 
-/**
- * Created by gregory on 16.06.16.
- */
 public class BenchTool {
     private FileWriter w;
     public BenchTool(String filePath) throws IOException {

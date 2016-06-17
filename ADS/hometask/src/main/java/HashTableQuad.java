@@ -1,6 +1,3 @@
-/**
- * Created by gregory on 17.06.16.
- */
 public class HashTableQuad<E> {
     class Entry<T>{
         int key;
