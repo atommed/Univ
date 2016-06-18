@@ -34,7 +34,7 @@ public class Sorts {
         }
     }
 
-    static int[] c = new int[Character.MAX_VALUE - Character.MIN_VALUE + 1];
+    private static int[] c = new int[Character.MAX_VALUE - Character.MIN_VALUE + 1];
 
     private static String[] radixCountingSort(String[] a, int pos){
         String[] b = new String[a.length];
