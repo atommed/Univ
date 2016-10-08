@@ -4,73 +4,74 @@
 namespace OOPLab1
 {	
 	interface IMoneyGrabber{
-		void visit(LawfullMan lm);
-		void visit(Bandit b);
+		void Visit(LawfullMan lm);
+		void Visit(Bandit b);
 	}
 
 	interface IMoneyGrabbable{
-		void accept(IMoneyGrabber g);
+		void Accept(IMoneyGrabber g);
 	}
 	
-	abstract class EconomicUnit{
+	abstract class EconomicUnit : IMoneyGrabbable{
 		private static ulong uid = 0;
-		public String name{ get;private set;}
+		public String Name{ get;private set;}
+		public decimal Budget{ get;private set;}
 
-		protected virtual decimal budget{ get; set;}
-
-		protected virtual void recieveMoney(EconomicUnit payer, decimal amount){
-			this.budget += amount;
+		public abstract void Accept(IMoneyGrabber g);
+		public virtual void RecieveMoney(EconomicUnit payer, decimal amount){
+			this.Budget += amount;
 		}
-		protected virtual void pay(EconomicUnit recv, decimal amount){
-			if (this.budget < amount)
-				OnMoneyEnd();
+		public virtual void Pay(EconomicUnit recv, decimal amount){
+			if (this.Budget < amount)
+				OnMoneyEnd(recv);
 			else {
-				this.budget -= amount;
-				recv.recieveMoney (this, amount);
+				this.Budget -= amount;
+				recv.RecieveMoney (this, amount);
 			}
 		}
-
-		protected abstract void OnMoneyEnd();
-
-		public EconomicUnit(string name){
-			this.name = name + " #" + (uid++);
+		protected abstract void OnMoneyEnd(EconomicUnit taker);
+		protected EconomicUnit(string name){
+			this.Name = "#" + (uid++) +" " + name;
 		}
 	}
 
-	class Man : EconomicUnit{
-		public Man(string name) : base(name){
-			Console.WriteLine (this.name + " borns");
+	abstract class Man : EconomicUnit{
+		protected Man(string name) : base(name){
+			Console.WriteLine (this.Name + " borns");
 		}
 
 		protected virtual void Die(){
-			Console.WriteLine (this.name + " dies");
+			Console.WriteLine (this.Name + " dies");
 		}
 
-		protected override void OnMoneyEnd(){
-			Console.WriteLine (this.name + ": Looks like i have no more money");
+		protected override void OnMoneyEnd(EconomicUnit taker){
+			Pay (taker, this.Budget);
+			Console.WriteLine (this.Name + " says: Looks like i have no more money");
 			Die();
 		}
 	}
 
-	class LawfullMan : Man, IMoneyGrabbable{
+	class LawfullMan : Man{
 		public LawfullMan(string name) : base("lawfull " + name){}
 		public LawfullMan() : this(NameGenerator.NextName()){}
-		public void accept(IMoneyGrabber g){
-			g.visit(this);
+		public override void Accept(IMoneyGrabber g){
+			g.Visit(this);
 		}
 	}
 		
-	class Bandit : Man, IMoneyGrabbable, IMoneyGrabber{
+	class Bandit : Man, IMoneyGrabber{
+
 		public Bandit(string name) : base("bandit " + name){}
 		public Bandit() : base("bandit " + NameGenerator.NextName()){}
-
-		public void accept(IMoneyGrabber g){
-			g.visit(this);
+		public override void Accept(IMoneyGrabber g){
+			g.Visit(this);
 		}
-
-		public void visit(LawfullMan l){
+		public void Visit(LawfullMan l){
+			decimal amount = 42;
+			Console.WriteLine(l.Name + " ows " + amount + "$ to " + this.Name);
+			l.Pay(this, 42);
 		}
-		public void visit(Bandit b){
+		public void Visit(Bandit b){
 		}
 	}
 	
@@ -78,19 +79,9 @@ namespace OOPLab1
 	{
 		public static void Main (string[] args)
 		{
-			MathNet.Numerics.Distributions.Normal nd = new MathNet.Numerics.Distributions.Normal (150, 30);
-			int a, b, c;
-			a = 0;b = 0; c = 0;
-			for (int i = 0; i < 10000; i++){
-				double res = nd.Sample();
-				if (res < 100)
-					a++;
-				else if (res > 200)
-					b++;
-				else
-					c++;
-			}
-			Console.WriteLine (a + " " + b + " " + c);
+			var l = new LawfullMan ();
+			var b = new Bandit ();
+			b.Visit (l);
 		}
 	}
 }
