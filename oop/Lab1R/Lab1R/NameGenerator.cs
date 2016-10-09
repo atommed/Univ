@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 
-namespace OOPLab1
+namespace Lab1R
 {
 	public class NameGenerator
 	{
@@ -33,6 +34,15 @@ namespace OOPLab1
 			"Magistr",
 			"Doge",
 			"Pepe",
+			"Roman",
+			"Michael",
+			"Trevor",
+			"Mr",
+			"Admiral",
+			"Lieutenant",
+			"Satoshi",
+			"Isran",
+			"Arthas"
 		};
 		private static readonly string[] surnames = {
 			"Faustin",
@@ -45,8 +55,7 @@ namespace OOPLab1
 			"Laden",
 			"Korolev",
 			"Gagarin",
-			"VyrviGlaz",
-			"OrlinijGlaz",
+			"Koshechkin",
 			"Ivanov",
 			"Doe",
 			"Progulkin",
@@ -59,26 +68,51 @@ namespace OOPLab1
 			"The Strong",
 			"The Smart",
 			"The Fearless",
-			"The Frog"
+			"The Frog",
+			"Johnson",
+			"Torvalds",
+			"Philips",
+			"Sharapov",
+			"Oslov",
+			"Nakamoto",
+			"Smartypants",
+			"Zahaev",
+			"Menethyl",
+			"Gordon",
 		};
 		#endregion
 
 		private static readonly string[] namePairs;
 		private static Random rnd = new Random();
+		private static int currName;
+
+		private static void shuffleNamePairs(){
+			int n = namePairs.Length;
+			while (n > 1) {
+				int k = rnd.Next (n);
+				n--;
+				string tmp = namePairs [k];
+				namePairs [k] = namePairs[n];
+				namePairs [n] = tmp;
+			}
+		}
 
 		static NameGenerator ()
 		{
-			namePairs = new string[names.Length * surnames.Length];
+			int len = names.Length * surnames.Length;
+			namePairs = new string[len];
 			int pos = 0;
 			foreach (var name in names)
 				foreach (var surname in surnames)
 					namePairs [pos++] = name + " " + surname;
-
+			Debug.Assert (pos == len);
+			shuffleNamePairs ();
 		}
 
 		public static string NextName(){
-			return namePairs[rnd.Next(0,namePairs.Length)];
+			string res = namePairs [currName++];
+			currName %= namePairs.Length;
+			return res;
 		}
 	}
 }
-
