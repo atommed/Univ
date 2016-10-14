@@ -13,16 +13,23 @@ namespace Lab1R
 			m.Visit(this);
 		}
 
+		public void Visit(Enterprise e){
+			GoToShop(e);
+		}
+
 		public void Visit(LawfullMan l){
+			Say($"Hi there, {l.ownName}");
 		}
 		public void Visit(Bandit b){
-		}
-		public void Visit(Enterprise e){
+			Say($"{b.ownName} looks fishily!");
+			Console.WriteLine($"{b.Name} gets rid of {Name}");
+			b.Pay (this, b.Budget / 10);
+			if(rnd.Next(3) == 1) Die ();
 		}
 
 		protected override void OnMoneyEnd(EconomicUnit taker, decimal amount){
-			Pay(taker, Budget);
-			Say("Lol, looks like I have no money now");
+			taker.BePayed(this, Budget);
+			Say("Lol, looks like I ran out of money");
 			Die ();
 		}
 	}

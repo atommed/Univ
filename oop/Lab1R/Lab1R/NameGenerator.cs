@@ -13,7 +13,7 @@ namespace Lab1R
 			"Sergei",
 			"Niko",
 			"Dimon",
-			"Tony",
+			"Toney",
 			"Petr",
 			"Vitya",
 			"Jenia",
@@ -40,11 +40,11 @@ namespace Lab1R
 			"Mr",
 			"Admiral",
 			"Lieutenant",
-			"Satoshi",
 			"Isran",
 			"Arthas"
 		};
 		private static readonly string[] surnames = {
+			"Petrovich",
 			"Faustin",
 			"Bellik",
 			"Frai",
@@ -74,11 +74,26 @@ namespace Lab1R
 			"Philips",
 			"Sharapov",
 			"Oslov",
-			"Nakamoto",
 			"Smartypants",
 			"Zahaev",
 			"Menethyl",
 			"Gordon",
+		};
+
+		private static readonly string[] entNames = {
+			" Inc",
+			" Corp",
+			" Enterprise",
+			"®",
+			"™",
+			" Incorporated",
+			" Services",
+			" Company",
+			" Foundation",
+			" Group",
+			" and Associates",
+			" Energy",
+			" Technology",
 		};
 		#endregion
 
@@ -113,6 +128,11 @@ namespace Lab1R
 			string res = namePairs [currName++];
 			currName %= namePairs.Length;
 			return res;
+		}
+
+		public static string NextEnterprise(){
+			int r = rnd.Next (entNames.Length);
+			return "'" + NextName () + entNames [r] + "'";
 		}
 	}
 }
