@@ -11,7 +11,7 @@ namespace Lab1R
 		protected override void OnMoneyEnd(EconomicUnit taker, decimal amount){
 		}
 
-		public Enterprise ()
+		public Enterprise () : base(0)
 		{
 		}
 	}

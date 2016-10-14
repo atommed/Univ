@@ -7,7 +7,7 @@ namespace Lab1R
 		protected virtual void Die(){
 			Console.WriteLine ($"{Name} dies");
 		}
-		protected Man(string name){
+		protected Man(string name) : base(0){
 			this.Name = name;
 			Console.WriteLine ($"{Name} borns");
 		}

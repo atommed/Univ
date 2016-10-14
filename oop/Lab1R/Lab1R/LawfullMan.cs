@@ -13,6 +13,13 @@ namespace Lab1R
 			m.Visit(this);
 		}
 
+		public void Visit(LawfullMan l){
+		}
+		public void Visit(Bandit b){
+		}
+		public void Visit(Enterprise e){
+		}
+
 		protected override void OnMoneyEnd(EconomicUnit taker, decimal amount){
 			Pay(taker, Budget);
 			Say("Lol, looks like I have no money now");
