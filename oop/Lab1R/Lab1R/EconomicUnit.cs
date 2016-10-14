@@ -3,6 +3,9 @@ using LNDist = MathNet.Numerics.Distributions.LogNormal;
 
 namespace Lab1R
 {
+	/**
+	 * \brief Base class for the objects of real world
+	 */
 	public 	abstract class EconomicUnit{
 		private static ulong genUUID;
 		protected static Random rnd = new Random();

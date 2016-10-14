@@ -2,6 +2,9 @@
 
 namespace Lab1R
 {
+	/**
+	 * \brief Base class for humans
+	 */
 	public abstract class Man : EconomicUnit{
 		private const double START_BUDGET_COEF = 100;
 		private const int BAD_PRODUCTION_RAIT = 30;
@@ -10,7 +13,8 @@ namespace Lab1R
 				Say ("It's time to make some purchases!");
 				if (rnd.Next (BAD_PRODUCTION_RAIT) == 1) {
 					Say ($"Omg I need moral compensation for bad products!");
-					e.Pay (this, (decimal)rnd.NextDouble() * e.Budget * Power / (Power + e.Power));
+					var compensation = (decimal)rnd.NextDouble () * e.Budget * Power / (Power + e.Power);
+					e.Pay (this, compensation);
 				}
 				decimal amount = this.Budget / rnd.Next (5, 20);
 				Console.WriteLine ($"{Name} spends ${amount:0.##}");

@@ -2,6 +2,9 @@
 
 namespace Lab1R
 {
+	/**
+	 * \brief Man who earns money by breaking the law
+	 */
 	public class Bandit : Man, IMoneyInteractor {
 		public override string Name {
 			get {

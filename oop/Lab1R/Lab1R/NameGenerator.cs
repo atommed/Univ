@@ -3,6 +3,9 @@ using System.Diagnostics;
 
 namespace Lab1R
 {
+	/**
+	 * \brief Static class for random names generation
+	 */
 	public class NameGenerator
 	{
 		#region Names

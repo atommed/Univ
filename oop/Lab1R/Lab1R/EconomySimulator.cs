@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 namespace Lab1R
 {
+	/**
+	 * \brief Singleton class for modeling economical situation
+	 */
 	public class EconomySimulator
 	{
 		public static EconomySimulator Instance{ get; private set; } 
@@ -72,7 +75,7 @@ namespace Lab1R
 			SortByBudgetDescending ();
 			for (int i = 0; i < Math.Min(10, units.Count); i++) {
 				EconomicUnit e = units [i];
-				Console.WriteLine ($"#{i+1}: {e.Name} with {e.Budget:0.##}");
+				Console.WriteLine ($"#{i+1}: {e.Name} with ${e.Budget:0.##}");
 			}
 		}
 
@@ -84,7 +87,8 @@ namespace Lab1R
 			while (units.Count < 10)
 				TryCreateUnit ();
 			watch.Stop ();
-			Console.WriteLine ($"######## World created in {watch.Elapsed.TotalMilliseconds}ms ###########");
+			var t = watch.Elapsed.TotalMilliseconds;
+			Console.WriteLine ($"######## World created in {t}ms ###########");
 		}
 	}
 }

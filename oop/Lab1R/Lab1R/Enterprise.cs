@@ -2,6 +2,9 @@
 
 namespace Lab1R
 {
+	/**
+	 * \brief Companies that earn money by exploitation of people
+	 */
 	public class Enterprise : EconomicUnit, IMoneyInteractor
 	{
 		private const double START_BUDGET_COEF = 1000;

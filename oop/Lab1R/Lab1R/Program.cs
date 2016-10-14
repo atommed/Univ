@@ -1,15 +1,18 @@
 ﻿using System;
-//TODO: Start all methods from capital letter
 
 namespace Lab1R
 {
-	class MainClass
+	class Program
 	{
+		private static void NextDay(){
+			Console.WriteLine ("############# NEXT DAY COMES! ###############");
+			EconomySimulator.Instance.Step ();
+		}
+
 		public static void Main (string[] args)
 		{
 			while(true) {
-				Console.WriteLine ("############# NEXT DAY COMES! ###############");
-				EconomySimulator.Instance.Step ();
+				NextDay ();
 				var k = Console.ReadKey ().Key;
 				if (k == ConsoleKey.Escape)
 					break;
@@ -18,7 +21,7 @@ namespace Lab1R
 					EconomySimulator.Instance.PrintForbes ();
 				} else if (k == ConsoleKey.S) {
 					for (int i = 0; i < 3000; i++) {
-						EconomySimulator.Instance.Step ();
+						NextDay ();
 					}
 				}
 			}

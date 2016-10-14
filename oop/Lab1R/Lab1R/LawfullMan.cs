@@ -2,6 +2,9 @@
 
 namespace Lab1R
 {
+	/**
+	 * \brief Man who can't break the law
+	 */
 	public class LawfullMan : Man, IMoneyInteractor {
 		public override string Name {
 			get {
@@ -23,8 +26,10 @@ namespace Lab1R
 		public void Visit(Bandit b){
 			Say($"{b.ownName} looks fishily!");
 			Console.WriteLine($"{b.Name} gets rid of {Name}");
-			b.Pay (this, b.Budget / 10);
-			if(rnd.Next(3) == 1) Die ();
+			if (rnd.Next (3) == 1)
+				Die ();
+			else
+				b.Pay (this, b.Budget / 10);
 		}
 
 		protected override void OnMoneyEnd(EconomicUnit taker, decimal amount){
