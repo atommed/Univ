@@ -18,7 +18,7 @@ namespace Lab1R
 		private const int CRYSIS_RAIT = 250;
 		private const double ENTERPRISE_CREATION_RAIT = 16;
 		private const double BANDIT_CREATION_RAIT = 4;
-		private const double LAWFULL_CREATION_RAIT = 2;
+		private const double LAWFUL_CREATION_RAIT = 2;
 
 		private Random rnd = new Random();
 		private List<EconomicUnit> units;
@@ -36,8 +36,8 @@ namespace Lab1R
 				RegisterUnit(new Enterprise());
 			else if(rait < 1/BANDIT_CREATION_RAIT)
 				RegisterUnit(new Bandit());
-			else if(rait < 1/LAWFULL_CREATION_RAIT)
-				RegisterUnit(new LawfullMan());
+			else if(rait < 1/LAWFUL_CREATION_RAIT)
+				RegisterUnit(new LawfulMan());
 		}
 
 		public void Step(){
@@ -71,7 +71,7 @@ namespace Lab1R
 		}
 
 		public void PrintForbes(){
-			Console.WriteLine ("Here is the Forebs raiting!");
+			Console.WriteLine ("Here is the Forbes raiting!");
 			SortByBudgetDescending ();
 			for (int i = 0; i < Math.Min(10, units.Count); i++) {
 				EconomicUnit e = units [i];

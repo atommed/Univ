@@ -28,7 +28,7 @@ namespace Lab1R
 			}
 		}
 
-		public void Visit(LawfullMan l){
+		public void Visit(LawfulMan l){
 			TryHireWorker(l);
 		}
 

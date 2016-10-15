@@ -34,7 +34,7 @@ namespace Lab1R
 			}
 		}
 
-		public void Visit(LawfullMan l){
+		public void Visit(LawfulMan l){
 			Console.WriteLine($"{Name} wants to rob {l.Name}");
 			if (l.Power / this.Power > 4) {
 				Say ($"{l.ownName} is too stronk for me, robbing him is not a good idea");

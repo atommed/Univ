@@ -5,10 +5,10 @@ namespace Lab1R
 	/**
 	 * \brief Man who can't break the law
 	 */
-	public class LawfullMan : Man, IMoneyInteractor {
+	public class LawfulMan : Man, IMoneyInteractor {
 		public override string Name {
 			get {
-				return "lawfull " + base.Name;
+				return "lawful " + base.Name;
 			}
 		}
 
@@ -20,7 +20,7 @@ namespace Lab1R
 			GoToShop(e);
 		}
 
-		public void Visit(LawfullMan l){
+		public void Visit(LawfulMan l){
 			Say($"Hi there, {l.ownName}");
 		}
 		public void Visit(Bandit b){
