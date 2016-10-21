@@ -49,7 +49,7 @@ namespace Lab1R
 			int posA = rnd.Next (units.Count);
 			int posB = rnd.Next (units.Count - 1);
 			if (posA == posB)
-				posB++;
+				posB = units.Count - 1;
 			EconomicUnit visitor = units [posA];
 			EconomicUnit client = units [posB];
 			Console.WriteLine ($"{visitor} visits {client}");
