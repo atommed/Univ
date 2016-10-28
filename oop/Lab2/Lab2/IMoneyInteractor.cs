@@ -11,5 +11,9 @@ namespace Lab1R
 		void Visit(Bandit b);
 		void Visit(Enterprise e);
 	}
+
+	public interface IMoneyInteractable{
+		void Accept(IMoneyInteractor i);
+	}
 }
 

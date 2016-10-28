@@ -6,7 +6,7 @@ namespace Lab1R
 	/**
 	 * \brief Base class for the objects of real world
 	 */
-	public 	abstract class EconomicUnit{
+	public 	abstract class EconomicUnit : IMoneyInteractable {
 		private static ulong genUUID;
 		protected static Random rnd = new Random();
 		private static LNDist budgetDist = new LNDist(0,0.5);
