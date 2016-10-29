@@ -7,6 +7,10 @@ namespace Lab1R
 	 * \brief Base class for the objects of real world
 	 */
 	public 	abstract class EconomicUnit : IMoneyInteractable {
+		public delegate void Payment(EconomicUnit recv, EconomicUnit payer, decimal amount);
+		public event Payment BeingPayed;
+
+
 		private static ulong genUUID;
 		protected static Random rnd = new Random();
 		private static LNDist budgetDist = new LNDist(0,0.5);
@@ -44,6 +48,10 @@ namespace Lab1R
 		public void BePayed(EconomicUnit from, decimal amount){
 			Console.WriteLine ($"{Name} receives {amount:$0.##} from {from.Name}");
 			Budget += amount;
+			var e = BeingPayed;
+			if (e != null) {
+				e.Invoke (this, from, amount);
+			}
 		}
 
 		public override string ToString ()

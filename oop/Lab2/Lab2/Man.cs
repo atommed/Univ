@@ -12,7 +12,7 @@ namespace Lab1R
 			if (Budget > 0) {
 				Say ("It's time to make some purchases!");
 				if (rnd.Next (BAD_PRODUCTION_RAIT) == 1) {
-					Say ($"Omg I need moral compensation for bad products!");
+					Say ("Omg I need moral compensation for bad products!");
 					var compensation = (decimal)rnd.NextDouble () * e.Budget * Power / (Power + e.Power);
 					e.Pay (this, compensation);
 				}
