@@ -19,7 +19,7 @@ namespace Lab1R
 		}
 
 		private const int CRYSIS_RAIT = 250;
-		private const int BANDIT_DETECT = 20;
+		private const int BANDIT_DETECT = 10;
 		private const double ENTERPRISE_CREATION_RAIT = 16;
 		private const double BANDIT_CREATION_RAIT = 4;
 		private const double LAWFUL_CREATION_RAIT = 2;
@@ -28,8 +28,10 @@ namespace Lab1R
 		private List<EconomicUnit> units;
 
 		public void TryTrackBandit (EconomicUnit bandit,EconomicUnit from, decimal amount){
-			if (from.Budget < 0 && rnd.Next (BANDIT_DETECT) == 0)
+			if(from.Budget + amount > bandit.Budget && rnd.Next (BANDIT_DETECT) == 0) {
+				Console.WriteLine ($"{bandit.Name} was caught!");
 				units.Remove (bandit);
+			}
 		}
 
 		public void RegisterUnit(Bandit b){
