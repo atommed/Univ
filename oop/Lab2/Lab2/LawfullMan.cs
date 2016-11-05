@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Lab1R
+namespace Lab2
 {
 	/**
 	 * \brief Man who can't break the law

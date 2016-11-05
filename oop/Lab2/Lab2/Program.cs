@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Lab1R
+namespace Lab2
 {
 	class BadInput: Exception{
 		public readonly ConsoleKey key;

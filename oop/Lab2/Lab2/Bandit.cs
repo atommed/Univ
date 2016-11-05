@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Lab1R
+namespace Lab2
 {
 	/**
 	 * \brief Man who earns money by breaking the law

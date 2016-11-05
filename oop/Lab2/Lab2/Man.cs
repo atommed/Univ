@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Lab1R
+namespace Lab2
 {
 	/**
 	 * \brief Base class for humans
@@ -25,7 +25,7 @@ namespace Lab1R
 		}
 		protected virtual void Die(){
 			Console.WriteLine ($"{Name} dies");
-			EconomySimulator.Instance.UnregisterUnit (this);
+			DoDeactivate ();
 		}
 		protected Man(string name) : base(name, START_BUDGET_COEF){
 			Console.WriteLine ($"{Name} borns and he has ${Budget:0.##}");

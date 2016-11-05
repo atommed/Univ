@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace Lab1R
+namespace Lab2
 {
 	/**
 	 * \brief Static class for random names generation

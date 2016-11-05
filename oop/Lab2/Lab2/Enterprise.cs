@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Lab1R
+namespace Lab2
 {
 	/**
 	 * \brief Companies that earn money by exploitation of people
@@ -46,7 +46,7 @@ namespace Lab1R
 				Console.WriteLine ($"{Name} SEO claims {e.Name} is a company of thiefs!");
 				if (rnd.Next (10) == 0) {
 					Console.WriteLine ($"Oh my, {Name} SEO was right. All {e.Name} workers go to prison now!");
-					EconomySimulator.Instance.UnregisterUnit (e);
+					DoDeactivate ();
 				}
 			}
 		}
@@ -58,7 +58,7 @@ namespace Lab1R
 		protected override void OnMoneyEnd(EconomicUnit taker, decimal amount){
 			taker.BePayed(this, Budget);
 			Console.WriteLine ($"{Name} is a bankrupt, lol");
-			EconomySimulator.Instance.UnregisterUnit (this);
+			DoDeactivate ();
 		}
 
 		public Enterprise () : base(NameGenerator.NextEnterprise(),START_BUDGET_COEF)

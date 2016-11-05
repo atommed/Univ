@@ -3,16 +3,37 @@ using System.Linq;
 using System.Diagnostics;
 using System.Collections.Generic;
 
-namespace Lab1R
+namespace Lab2
 {
+	class UnitHolder<T> : List<T> where T:IDeactivatable,IComparable<T> {
+		private void InsertSorted(T v){
+			if (Count == 0)
+				Add (v);
+			else {
+				int i = 0;
+				while (i < Count && v.CompareTo(this [i]) < 0)
+					i++;
+				Insert(i, v);
+			}
+		}
+
+		public void Register(T v){
+			if (Contains (v))
+				throw new InvalidOperationException ("All units must be unique");
+			v.Deactivate += () => Unregister (v);
+			InsertSorted (v);
+		}
+
+		public void Unregister(T v){
+			Remove (v);
+		}
+	}
+	
 	/**
 	 * \brief Singleton class for modeling economical situation
 	 */
 	public class EconomySimulator
 	{
-		public delegate List<EconomicUnit> GlobalEffect(List<EconomicUnit> all);
-		public event GlobalEffect CrysisBegins;
-		
 		public static EconomySimulator Instance{ get; private set; } 
 		static EconomySimulator(){
 			Instance = new EconomySimulator ();
@@ -25,12 +46,12 @@ namespace Lab1R
 		private const double LAWFUL_CREATION_RAIT = 2;
 
 		private Random rnd = new Random();
-		private List<EconomicUnit> units;
+		private UnitHolder<EconomicUnit> registry;
 
 		public void TryTrackBandit (EconomicUnit bandit,EconomicUnit from, decimal amount){
 			if(from.Budget + amount > bandit.Budget && rnd.Next (BANDIT_DETECT) == 0) {
 				Console.WriteLine ($"{bandit.Name} was caught!");
-				units.Remove (bandit);
+				registry.Unregister (bandit);
 			}
 		}
 
@@ -40,16 +61,8 @@ namespace Lab1R
 		}
 
 		public void RegisterUnit(EconomicUnit u){
-			units.Add (u);
-		}
-
-		public void UnregisterUnit(Bandit b){
-			b.BeingPayed -= TryTrackBandit;
-			UnregisterUnit (b);
-		}
-		public void UnregisterUnit(EconomicUnit u){
-			units.Remove (u);
-		}
+			registry.Register (u);
+		}			
 
 		private void TryCreateUnit(){
 			double rait = rnd.NextDouble ();
@@ -59,62 +72,61 @@ namespace Lab1R
 				RegisterUnit(new Bandit());
 			else if(rait < 1/LAWFUL_CREATION_RAIT)
 				RegisterUnit(new LawfulMan());
+		}	
+
+		private void SortDescending(){
+			registry.Sort(((x, y) => y.CompareTo(x)));
 		}
 
 		public void Step(){
 			if (rnd.Next (CRYSIS_RAIT) == 1) {
 				Console.WriteLine ("OMG! CRYSIS BEGINS!!!");
-				GlobalEffect ev = CrysisBegins;
-				if (ev != null) {
-					units = ev.Invoke (units);
-				}
+				StopSomeUnits ();
+
 			}
 			do {
 				TryCreateUnit ();
-			} while(units.Count < 2);
-			int posA = rnd.Next (units.Count);
-			int posB = rnd.Next (units.Count - 1);
+			} while(registry.Count < 2);
+			int posA = rnd.Next (registry.Count);
+			int posB = rnd.Next (registry.Count - 1);
 			if (posA == posB)
-				posB = units.Count - 1;
-			var visitor = units [posA] as IMoneyInteractor;
-			IMoneyInteractable client = units [posB];
+				posB = registry.Count - 1;
+			var visitor = registry [posA] as IMoneyInteractor;
+			IMoneyInteractable client = registry [posB];
 			Console.WriteLine ($"{visitor} visits {client}");
 			client.Accept (visitor);
 		}
 
-		private List<EconomicUnit> StopSomeUnits(List<EconomicUnit> all){
-			for (int i = 0; i < all.Count; i++) {
-				if (all[i] is Enterprise && rnd.Next() % 5 == 0)
-					all.RemoveAt (i);
-			}
-			SortByBudgetDescending (all);
-			return all.GetRange(0, all.Count / 2);
-		}
-
-		private static void SortByBudgetDescending(List<EconomicUnit> all){
-			all.Sort ((b, a) => a.Budget.CompareTo (b.Budget));
+		private void StopSomeUnits(){			
+			registry.RemoveAll ((EconomicUnit v) => {
+				return 
+					(v is Enterprise && rnd.Next(3) == 1) ||
+					(v is Man        && rnd.Next(15) == 1);
+			});
+			int c = registry.Count;
+			if(c > 2)
+				registry.RemoveRange (c / 2, c / 2 - 1);//Removes half of all.
 		}
 
 		public void PrintForbes(){
+			SortDescending ();
 			Console.WriteLine ("Here is the Forbes raiting!");
-			SortByBudgetDescending (units);
-			for (int i = 0; i < Math.Min(10, units.Count); i++) {
-				EconomicUnit e = units [i];
+			for (int i = 0; i < Math.Min(10, registry.Count); i++) {
+				EconomicUnit e = registry [i];
 				Console.WriteLine ($"#{i+1}: {e.Name} with ${e.Budget:0.##}");
 			}
 		}
 
 		private EconomySimulator ()
-		{
+		{			
 			var watch = new Stopwatch();
 			watch.Start ();
-			units = new List<EconomicUnit> ();
-			while (units.Count < 10)
+			registry = new UnitHolder<EconomicUnit> ();
+			while (registry.Count < 10)
 				TryCreateUnit ();
 			watch.Stop ();
 			var t = watch.Elapsed.TotalMilliseconds;
-			Console.WriteLine ($"######## World created in {t}ms ###########");
-			CrysisBegins += StopSomeUnits;
+			Console.WriteLine ($"######## World created in {t}ms ###########");		
 		}
 	}
 }
