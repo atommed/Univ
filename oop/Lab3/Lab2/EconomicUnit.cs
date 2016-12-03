@@ -1,41 +1,48 @@
 ﻿using System;
+using System.Xml.Serialization;
 using LNDist = MathNet.Numerics.Distributions.LogNormal;
 
-namespace Lab2
+namespace Lab3
 {
 	/**
 	 * \brief Base class for the objects of real world
 	 */
+	[XmlInclude(typeof(Bandit))]
+	[XmlInclude(typeof(LawfulMan))]
+	[XmlInclude(typeof(Enterprise))]
+	[Serializable]
 	public 	abstract class EconomicUnit : IMoneyInteractable, IDeactivatable, IComparable<EconomicUnit> {
-		public delegate void OnPayment(EconomicUnit recv, EconomicUnit payer, decimal amount);
-		public event OnPayment BeingPayed;
-		public event DeactivateHandler Deactivate;
+		[field: NonSerialized] public event Func<EconomicUnit, EconomicUnit, decimal, decimal> BeingPayed;
+		[field: NonSerialized] public event Action Deactivate;
 
-		private static ulong genUUID;
+		public static ulong genUUID;
 		protected static Random rnd = new Random();
 		private static LNDist budgetDist = new LNDist(0,0.5);
 		public static readonly int MAX_POWER = 10000;
 
 
-		public int Power { get; private set;}
-		public ulong UUID { get; private set;}
-		public decimal Budget{ get; private set;}
-		public readonly string ownName;
+		public int Power { get; set;}
+		public ulong UUID { get;}
+		public decimal Budget{ get; set;}
+		public string OwnName{ get; set;}
 		public virtual string Name {
 			get {
-				return ownName;
+				return OwnName;
 			}
 		}
 
 		public abstract void Accept(IMoneyInteractor m);
 		protected abstract void OnMoneyEnd(EconomicUnit recv, decimal amount);
 
+		public EconomicUnit(){
+		}
+
 		protected EconomicUnit(string name,double budgetCoef = 1){
 			if(budgetCoef < 0) throw new ArgumentOutOfRangeException("budgetCoef","Must be > 0");
 			this.UUID = genUUID++;
 			this.Power = rnd.Next (1,MAX_POWER);
 			this.Budget = (decimal)(budgetDist.Sample () * budgetCoef);
-			this.ownName = name;
+			this.OwnName = name;
 		}
 		public void Pay(EconomicUnit recv, decimal amount){
 			if (amount > Budget)

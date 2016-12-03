@@ -1,10 +1,11 @@
 ﻿using System;
 
-namespace Lab2
+namespace Lab3
 {
 	/**
 	 * \brief Man who can't break the law
 	 */
+	[Serializable]
 	public class LawfulMan : Man, IMoneyInteractor {
 		public override string Name {
 			get {
@@ -21,10 +22,10 @@ namespace Lab2
 		}
 
 		public void Visit(LawfulMan l){
-			Say($"Hi there, {l.ownName}");
+			Say($"Hi there, {l.OwnName}");
 		}
 		public void Visit(Bandit b){
-			Say($"{b.ownName} looks fishily!");
+			Say($"{b.OwnName} looks fishily!");
 			Console.WriteLine($"{b.Name} gets rid of {Name}");
 			if (rnd.Next (3) == 1)
 				Die ();

@@ -34,6 +34,8 @@
     <Reference Include="MathNet.Numerics">
       <HintPath>..\packages\MathNet.Numerics.3.13.1\lib\net40\MathNet.Numerics.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Serialization" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -47,6 +49,9 @@
     <Compile Include="Enterprise.cs" />
     <Compile Include="EconomySimulator.cs" />
     <Compile Include="IDeactivatable.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="SimulationOption.cs" />
+    <Compile Include="UnitHolder.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

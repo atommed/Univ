@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Lab2
+namespace Lab3
 {
 	/**
 	 * \brief Visitor able to make operations with EconomicUnit

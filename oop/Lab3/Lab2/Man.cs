@@ -1,10 +1,11 @@
 ﻿using System;
 
-namespace Lab2
+namespace Lab3
 {
 	/**
 	 * \brief Base class for humans
 	 */
+	[Serializable]
 	public abstract class Man : EconomicUnit{
 		private const double START_BUDGET_COEF = 100;
 		private const int BAD_PRODUCTION_RAIT = 30;
@@ -27,12 +28,13 @@ namespace Lab2
 			Console.WriteLine ($"{Name} dies");
 			DoDeactivate ();
 		}
+
 		protected Man(string name) : base(name, START_BUDGET_COEF){
 			Console.WriteLine ($"{Name} borns and he has ${Budget:0.##}");
 		}
 		protected Man() : this(NameGenerator.NextName()){}
 		protected void Say(string what){
-			Console.WriteLine ($"{ownName} says: {what}");
+			Console.WriteLine ($"{OwnName} says: {what}");
 		}
 	}
 }

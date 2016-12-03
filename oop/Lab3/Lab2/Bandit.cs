@@ -1,10 +1,11 @@
 ﻿using System;
 
-namespace Lab2
+namespace Lab3
 {
 	/**
 	 * \brief Man who earns money by breaking the law
 	 */
+	[Serializable]
 	public class Bandit : Man, IMoneyInteractor {
 		public override string Name {
 			get {
@@ -37,23 +38,23 @@ namespace Lab2
 		public void Visit(LawfulMan l){
 			Console.WriteLine($"{Name} wants to rob {l.Name}");
 			if (l.Power / this.Power > 4) {
-				Say ($"{l.ownName} is too stronk for me, robbing him is not a good idea");
+				Say ($"{l.OwnName} is too stronk for me, robbing him is not a good idea");
 			} else {
 				decimal amount = (decimal)(this.Power / Math.Sqrt(l.Power * 10));
 				int successProbe = rnd.Next (15 * this.Power);
 				if (successProbe < l.Power) {
-					Console.WriteLine ($"{Name} failed to rob {l.ownName}");
+					Console.WriteLine ($"{Name} failed to rob {l.OwnName}");
 					Say ("Hah, maybe in my next life I gonna find myself a better job");
 					Die ();
 				} else {
-					Say ($"Yo, {l.ownName}, u owe me ${amount:0.##}, yo!");
+					Say ($"Yo, {l.OwnName}, u owe me ${amount:0.##}, yo!");
 					l.Pay (this, amount);
 				}
 			}
 		}
 
 		public void Visit(Bandit b){
-			Say($"It takes a thief to catch a thief, {b.ownName}!");
+			Say($"It takes a thief to catch a thief, {b.OwnName}!");
 			if (b.Power / this.Power > 2) {
 				Say ($"Don't want to have problems with dat danger man {b.Name}");
 			} else {

@@ -1,10 +1,11 @@
 ﻿using System;
 
-namespace Lab2
+namespace Lab3
 {
 	/**
 	 * \brief Companies that earn money by exploitation of people
 	 */
+	[Serializable]
 	public class Enterprise : EconomicUnit, IMoneyInteractor
 	{
 		private const double START_BUDGET_COEF = 1000;

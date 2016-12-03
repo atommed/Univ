@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Lab2
+namespace Lab3
 {
 	class BadInput: Exception{
 		public readonly ConsoleKey key;
@@ -28,8 +28,15 @@ namespace Lab2
 				for (int i = 0; i < 3000; i++) {
 					NextDay ();
 				}
-			} else
-				throw new BadInput (k);
+			} else if (k == ConsoleKey.X) {
+				EconomySimulator.Instance.SaveStateXML ();
+			} else if (k == ConsoleKey.C) {
+				EconomySimulator.Instance.LoadStateXML ();
+			} else if (k == ConsoleKey.B) {
+				EconomySimulator.Instance.SaveStateBIN ();
+			} else if (k == ConsoleKey.V) {
+				EconomySimulator.Instance.LoadStateBIN ();
+			} else throw new BadInput (k);
 		}
 
 		public static void Main (string[] args)
